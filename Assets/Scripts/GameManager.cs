@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     public GameObject[] canvas;
 
     // 制限時間のカウント
-
     //カウントダウン
     public float countdown = 90.0f;
 
