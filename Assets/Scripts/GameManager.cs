@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using unityroom.Api;
 
 public class GameManager : MonoBehaviour
 {
@@ -150,8 +151,11 @@ public class GameManager : MonoBehaviour
             // 結果スコアを表示
             resultScoreText.text = score.ToString() + "週間";
 
+            // ボードNo1にスコア123.45fを送信する。
+            UnityroomApiClient.Instance.SendScore(1, score, ScoreboardWriteMode.HighScoreDesc);
+
             // メッセージ判定
-            if(score < 10)
+            if (score < 10)
             {
                 resultMessage.text = "1限目に遅刻だわ";
             }
