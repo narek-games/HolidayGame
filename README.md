@@ -1,2 +1,2 @@
 # HolidayGame
-自作ゲーム[]
+自作ゲーム「HolidayGame」
