@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using unityroom.Api;
+using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 {
@@ -53,18 +54,33 @@ public class GameManager : MonoBehaviour
     // ゲームスタートのフラグ
     public bool gameStartFlag = false;
 
+    // 1週間そろった時のSEの変数
+    public AudioClip holidaySE;
+
+    // 正しく入力できた時のSEの変数
+    public AudioClip correctSE;
+
+    // ゲームが終わった時のSEの変数
+    public AudioClip resultSE;
+
+    // SEを流すときに使う
+    AudioSource audioSource;
+
     void Start()
     {
         // タイトル画面だけを表示
         canvas[0].SetActive(true);
         canvas[1].SetActive(false);
         canvas[2].SetActive(false);
+
+        // SEの初期化
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return) && gameStartFlag == false){
+        if (Input.GetKeyDown(KeyCode.Space) && gameStartFlag == false){
 
             // ゲームを表示/タイトルとリザルトを非表示
             canvas[0].SetActive(false);
@@ -105,7 +121,19 @@ public class GameManager : MonoBehaviour
             timeText.text = countdown.ToString("f1") + "秒";
         }
 
-        // enterキー押すと実行(いまだけ)
+        // スペースキー(タイトルに戻る)入力時
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            // タイトル画面だけを表示
+            canvas[0].SetActive(true);
+            canvas[1].SetActive(false);
+            canvas[2].SetActive(false);
+
+            // ゲームスタートフラグをfalseに
+            gameStartFlag = false;
+        }
+
+        // 各対応キー入力時
         if (Input.anyKeyDown)
         {
             string keyStr = Input.inputString;
@@ -118,6 +146,9 @@ public class GameManager : MonoBehaviour
                     week[i] = 1;
                     holidayMark[i].SetActive(true);
                     holidayCount++;
+                    // SEを鳴らす
+                    audioSource.PlayOneShot(correctSE);
+
                     break;
                 }
             }
@@ -128,6 +159,8 @@ public class GameManager : MonoBehaviour
                 GenerateHoliday();
                 // アルファベットを表示
                 GenerateAlphabet();
+                // SEを鳴らす
+                audioSource.PlayOneShot(holidaySE);
                 // スコアを加算
                 score++;
             }
@@ -147,6 +180,9 @@ public class GameManager : MonoBehaviour
             canvas[0].SetActive(false);
             canvas[1].SetActive(false);
             canvas[2].SetActive(true);
+
+            // SEを鳴らす
+            audioSource.PlayOneShot(resultSE);
 
             // 結果スコアを表示
             resultScoreText.text = score.ToString() + "週間";
@@ -174,6 +210,10 @@ public class GameManager : MonoBehaviour
             else if(score < 52)
             {
                 resultMessage.text = "この眼はいつも君を追いかけてる";
+            }
+            else if(score < 70)
+            {
+                resultMessage.text = "キラキラ輝いてるそれは未来";
             }
             else if(score < 90)
             {
