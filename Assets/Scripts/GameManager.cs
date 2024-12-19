@@ -38,8 +38,8 @@ public class GameManager : MonoBehaviour
     // 表示するholidayマークの配列
     public GameObject[] holidayMark;
 
-    // 最初に生成されるholidayの数(固定や範囲指定をするときは生成数を表す変数を用意する)
-    //public int startHolidayCount = 4;
+    // 最初に生成されるholidayの数
+    public int startHolidayCount = 4;
 
     // 1週間の配列を生成(holiday判定　0:weekday　1:holiday)
     public int[] week = new int[] { 0, 0, 0, 0, 0, 0, 0 };
@@ -216,7 +216,7 @@ public class GameManager : MonoBehaviour
         // 時間切れになったら
         if (limitTime <= 0)
         {
-            // リザルト画面だけを表示
+            // タイトル画面だけを表示
             canvas[0].SetActive(false);
             canvas[1].SetActive(false);
             canvas[2].SetActive(true);
@@ -228,7 +228,7 @@ public class GameManager : MonoBehaviour
             // 結果スコアを表示
             resultScoreText.text = score.ToString() + "週間";
 
-            // ボードNo1にスコアを送信する。
+            // ボードNo1にスコア123.45fを送信する。
             UnityroomApiClient.Instance.SendScore(1, score, ScoreboardWriteMode.HighScoreDesc);
 
             // メッセージ判定
@@ -242,23 +242,23 @@ public class GameManager : MonoBehaviour
             }
             else if(score < 30)
             {
-                resultMessage.text = "たまにはちょっと冒険してみない?私たちと";
+                resultMessage.text = "私と君の色をのせて花がパッと咲いた";
             }
             else if(score < 40)
             {
-                resultMessage.text = "この眼はいつも君を追いかけてる";
+                resultMessage.text = "たまにはちょっと冒険してみない?私たちと";
             }
             else if(score < 52)
             {
-                resultMessage.text = "キラキラ輝いてるそれは未来";
+                resultMessage.text = "この眼はいつも君を追いかけてる";
             }
             else if(score < 70)
             {
-                resultMessage.text = "365日全部毎日がHoliday";
+                resultMessage.text = "キラキラ輝いてるそれは未来";
             }
             else if(score < 90)
             {
-                resultMessage.text = "みんなのことを花咲かせちゃいます！";
+                resultMessage.text = "365日全部毎日がHoliday";
             }
             else
             {
@@ -282,6 +282,8 @@ public class GameManager : MonoBehaviour
             holidayMark[i].SetActive(false);
         }
 
+        startHolidayCount = 4;
+
         // 配列の初期化(すべて0に)
         for(int i = 0; i < week.Length; i++)
         {
@@ -291,12 +293,23 @@ public class GameManager : MonoBehaviour
         // holidayマークをつけるループ
         for (int i = 0; i < week.Length; i++)
         {
-            if (!(holidayCount == 6))
+            if (startHolidayCount > 0)
             {
-                week[i] = Random.Range(0, 2);
-                if (week[i] == 1)
+                if (i < 7 - startHolidayCount)
                 {
+                    week[i] = Random.Range(0, 2);
+                    if (week[i] == 1)
+                    {
+                        holidayMark[i].SetActive(true);
+                        startHolidayCount--;
+                        holidayCount++;
+                    }
+                }
+                else if (i == 7 - startHolidayCount)
+                {
+                    week[i] = 1;
                     holidayMark[i].SetActive(true);
+                    startHolidayCount--;
                     holidayCount++;
                 }
             }       
