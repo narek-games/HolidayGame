@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour
     // スコアを表示するText型の変数
     public TextMeshProUGUI scoreText;
 
+    // 現在の難易度を表示するText型の変数
+    public TextMeshProUGUI levelText;
+
     // 結果スコアを表示するText型の変数
     public TextMeshProUGUI resultScoreText;
 
@@ -57,6 +60,9 @@ public class GameManager : MonoBehaviour
     // ゲーム状態のフラグ
     public int gameStateFlag = 0;
 
+    // 難易度を判別する関数(0->簡単、1->1普通、2->難しい、3->隠し難易度)
+    public int level = 0;
+
     // 1週間そろった時のSEの変数
     public AudioClip holidaySE;
 
@@ -84,41 +90,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && (gameStateFlag == 0 || gameStateFlag == 2)){
-
-            // カウントダウンのみ表示
-            canvas[0].SetActive(false);
-            canvas[1].SetActive(false);
-            canvas[2].SetActive(false);
-            canvas[3].SetActive(true);
-
-            // マーク初期化
-            for (int i = 0; i < holidayMark.Length; i++)
-            {
-                holidayMark[i].SetActive(false);
-            }
-
-            // スコア初期化
-            score = 0;
-
-            // 制限時間の初期化
-            countdown = 90.0f;
-
-            // カウントダウンの初期化
-            startCountdown = 3.0f;
-
-            // カウントダウンの開始
-            StartCountdown();
-
-            // holidayマークを生成する処理
-            GenerateHoliday();
-            // アルファベットを表示
-            GenerateAlphabet();
-
-            // ゲーム状態のフラグを3(カウントダウン)に
-            gameStateFlag = 3;
-        }
-
         if (gameStateFlag == 3)
         {
             // カウントダウン
@@ -133,8 +104,28 @@ public class GameManager : MonoBehaviour
             // スコアテキスト更新
             scoreText.text = score.ToString() + "週間";
 
+            // 現在の難易度を表示
+            if (level == 0)
+            {
+                levelText.text = "Easy";
+            }
+            else if (level == 1)
+            {
+                levelText.text = "Normal";
+            }
+            else if (level == 2)
+            {
+                levelText.text = "Difficult";
+            }
+
             //時間を表示する
             timeText.text = countdown.ToString("f1") + "秒";
+        }
+
+        // スペースキー(リトライ)入力時
+        if (Input.GetKeyDown(KeyCode.Space) && gameStateFlag == 2)
+        {
+            GameStart();
         }
 
         // タブキー(タイトルに戻る)入力時
@@ -182,6 +173,60 @@ public class GameManager : MonoBehaviour
                 score++;
             }
         }
+    }
+
+    // ゲームスタート(カウントダウン遷移)の関数
+    public void GameStart()
+    {
+        // カウントダウンのみ表示
+        canvas[0].SetActive(false);
+        canvas[1].SetActive(false);
+        canvas[2].SetActive(false);
+        canvas[3].SetActive(true);
+
+        // マーク初期化
+        for (int i = 0; i < holidayMark.Length; i++)
+        {
+            holidayMark[i].SetActive(false);
+        }
+
+        // スコア初期化
+        score = 0;
+
+        // 制限時間の初期化
+        countdown = 90.0f;
+
+        // カウントダウンの初期化
+        startCountdown = 3.0f;
+
+        // カウントダウンの開始
+        StartCountdown();
+
+        // holidayマークを生成する処理
+        GenerateHoliday();
+        // アルファベットを表示
+        GenerateAlphabet();
+
+        // ゲーム状態のフラグを3(カウントダウン)に
+        gameStateFlag = 3;
+    }
+
+    // 難易度を簡単に切り替える関数
+    public void SwitchEasy()
+    {
+        level = 0;
+    }
+
+    // 難易度を普通に切り替える関数
+    public void SwitchNormal()
+    {
+        level = 1;
+    }
+
+    // 難易度を難しいに切り替える関数
+    public void SwitchDifficult()
+    {
+        level = 2;
     }
 
     // ゲームスタート前のカウントダウンの関数
@@ -239,23 +284,23 @@ public class GameManager : MonoBehaviour
             }
             else if(score < 30)
             {
-                resultMessage.text = "私と君の色をのせて花がパッと咲いた";
+                resultMessage.text = "たまにはちょっと冒険してみない?私たちと";
             }
             else if(score < 40)
             {
-                resultMessage.text = "たまにはちょっと冒険してみない?私たちと";
+                resultMessage.text = "この眼はいつも君を追いかけてる";
             }
             else if(score < 52)
             {
-                resultMessage.text = "この眼はいつも君を追いかけてる";
+                resultMessage.text = "キラキラ輝いてるそれは未来";
             }
             else if(score < 70)
             {
-                resultMessage.text = "キラキラ輝いてるそれは未来";
+                resultMessage.text = "365日全部毎日がHoliday";
             }
             else if(score < 90)
             {
-                resultMessage.text = "365日全部毎日がHoliday";
+                resultMessage.text = "みんなのことを花咲かせちゃいます！";
             }
             else
             {
@@ -285,17 +330,47 @@ public class GameManager : MonoBehaviour
             week[i] = 0;
         }
 
+        // holidayの初期数を入れる変数の初期化
+        int　startHoliday = 0;
+
+        // holidayの初期数を決定
+        if (level == 0)
+        {
+            startHoliday = Random.Range(4, 7);
+        }
+        else if (level == 1)
+        {
+            startHoliday = Random.Range(2, 6);
+        }
+        else if(level == 2)
+        {
+            startHoliday = Random.Range(0, 3);
+        }
+
+
         // holidayマークをつけるループ
         for (int i = 0; i < week.Length; i++)
         {
-            if (!(holidayCount == 6))
+            if (startHoliday > 0)
             {
-                week[i] = Random.Range(0, 2);
-                if (week[i] == 1)
+                if(i < 7 - startHoliday)
                 {
+                    week[i] = Random.Range(0, 2);
+                    if (week[i] == 1)
+                    {
+                        holidayMark[i].SetActive(true);
+                        startHoliday--;
+                        holidayCount++;
+                    }
+                }
+                else if(i == 7 - startHoliday)
+                {
+                    week[i] = 1;
                     holidayMark[i].SetActive(true);
+                    startHoliday--;
                     holidayCount++;
                 }
+                
             }       
             
         }
