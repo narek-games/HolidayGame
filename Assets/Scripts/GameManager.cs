@@ -8,7 +8,7 @@ using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 {
-    // Canvasの表示を管理する配列
+    // Canvasの表示を管理する配列(0->タイトル、1->ゲーム、2->リザルト、3->カウントダウン)
     public GameObject[] canvas;
 
     // 制限時間のカウント
@@ -17,6 +17,12 @@ public class GameManager : MonoBehaviour
 
     //時間を表示するText型の変数
     public TextMeshProUGUI timeText;
+
+    // ゲームスタート前のカウントダウン
+    public float startCountdown = 3.0f;
+
+    // ↑を表示するText型の変数
+    public TextMeshProUGUI scText;
 
     // スコアを表示するText型の変数
     public TextMeshProUGUI scoreText;
@@ -33,9 +39,6 @@ public class GameManager : MonoBehaviour
     // 表示するholidayマークの配列
     public GameObject[] holidayMark;
 
-    // 最初に生成されるholidayの数
-    public int startHolidayCount = 4;
-
     // 1週間の配列を生成(holiday判定　0:weekday　1:holiday)
     public int[] week = new int[] { 0, 0, 0, 0, 0, 0, 0 };
 
@@ -51,8 +54,8 @@ public class GameManager : MonoBehaviour
     // アルファベット表示用の配列
     public TMP_Text[] alphabetText;
 
-    // ゲームスタートのフラグ
-    public bool gameStartFlag = false;
+    // ゲーム状態のフラグ
+    public int gameStateFlag = 0;
 
     // 1週間そろった時のSEの変数
     public AudioClip holidaySE;
@@ -72,6 +75,7 @@ public class GameManager : MonoBehaviour
         canvas[0].SetActive(true);
         canvas[1].SetActive(false);
         canvas[2].SetActive(false);
+        canvas[3].SetActive(false);
 
         // SEの初期化
         audioSource = GetComponent<AudioSource>();
@@ -80,12 +84,13 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && gameStartFlag == false){
+        if (Input.GetKeyDown(KeyCode.Space) && (gameStateFlag == 0 || gameStateFlag == 2)){
 
-            // ゲームを表示/タイトルとリザルトを非表示
+            // カウントダウンのみ表示
             canvas[0].SetActive(false);
-            canvas[1].SetActive(true);
+            canvas[1].SetActive(false);
             canvas[2].SetActive(false);
+            canvas[3].SetActive(true);
 
             // マーク初期化
             for (int i = 0; i < holidayMark.Length; i++)
@@ -99,17 +104,28 @@ public class GameManager : MonoBehaviour
             // 制限時間の初期化
             countdown = 90.0f;
 
+            // カウントダウンの初期化
+            startCountdown = 3.0f;
+
+            // カウントダウンの開始
+            StartCountdown();
+
             // holidayマークを生成する処理
             GenerateHoliday();
             // アルファベットを表示
             GenerateAlphabet();
 
-            // ゲームスタートフラグをtrueに
-            gameStartFlag = true;
-
+            // ゲーム状態のフラグを3(カウントダウン)に
+            gameStateFlag = 3;
         }
 
-        if(gameStartFlag == true)
+        if (gameStateFlag == 3)
+        {
+            // カウントダウン
+            StartCountdown();
+        }
+
+        if (gameStateFlag == 1)
         {
             // 制限時間を表示
             LimitTime();
@@ -121,16 +137,17 @@ public class GameManager : MonoBehaviour
             timeText.text = countdown.ToString("f1") + "秒";
         }
 
-        // スペースキー(タイトルに戻る)入力時
+        // タブキー(タイトルに戻る)入力時
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             // タイトル画面だけを表示
             canvas[0].SetActive(true);
             canvas[1].SetActive(false);
             canvas[2].SetActive(false);
+            canvas[3].SetActive(false);
 
-            // ゲームスタートフラグをfalseに
-            gameStartFlag = false;
+            // ゲーム状態フラグを0に
+            gameStateFlag = 0;
         }
 
         // 各対応キー入力時
@@ -167,6 +184,28 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // ゲームスタート前のカウントダウンの関数
+    void StartCountdown()
+    {
+        //カウントダウンする
+        startCountdown -= Time.deltaTime;
+
+        float displaySC = Mathf.Ceil(startCountdown);
+        //時間を表示する
+        scText.text = displaySC.ToString("f0");
+
+        // カウントが0になったら
+        if (startCountdown <= 0)
+        {
+            // ゲームを表示/カウントダウンを非表示
+            canvas[1].SetActive(true);
+            canvas[3].SetActive(false);
+
+            // ゲーム状態フラグを1(ゲーム)に
+            gameStateFlag = 1;
+        }
+    }
+
     // 制限時間の関数
     void LimitTime()
     {
@@ -176,8 +215,7 @@ public class GameManager : MonoBehaviour
         // 時間切れになったら
         if (countdown <= 0)
         {
-            // タイトル画面だけを表示
-            canvas[0].SetActive(false);
+            // リザルト画面だけを表示
             canvas[1].SetActive(false);
             canvas[2].SetActive(true);
 
@@ -224,8 +262,8 @@ public class GameManager : MonoBehaviour
                 resultMessage.text = "あたし、センパイと残陽したんだっ！";
             }
 
-            // ゲームスタートフラグをfalseに
-            gameStartFlag = false;
+            // ゲームスタートフラグを2(リザルト)に
+            gameStateFlag = 2;
         }
     }
 
@@ -241,8 +279,6 @@ public class GameManager : MonoBehaviour
             holidayMark[i].SetActive(false);
         }
 
-        startHolidayCount = 4;
-
         // 配列の初期化(すべて0に)
         for(int i = 0; i < week.Length; i++)
         {
@@ -252,23 +288,12 @@ public class GameManager : MonoBehaviour
         // holidayマークをつけるループ
         for (int i = 0; i < week.Length; i++)
         {
-            if (startHolidayCount > 0)
+            if (!(holidayCount == 6))
             {
-                if (i < 7 - startHolidayCount)
+                week[i] = Random.Range(0, 2);
+                if (week[i] == 1)
                 {
-                    week[i] = Random.Range(0, 2);
-                    if (week[i] == 1)
-                    {
-                        holidayMark[i].SetActive(true);
-                        startHolidayCount--;
-                        holidayCount++;
-                    }
-                }
-                else if (i == 7 - startHolidayCount)
-                {
-                    week[i] = 1;
                     holidayMark[i].SetActive(true);
-                    startHolidayCount--;
                     holidayCount++;
                 }
             }       
