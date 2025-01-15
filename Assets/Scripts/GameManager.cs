@@ -131,14 +131,7 @@ public class GameManager : MonoBehaviour
         // タブキー(タイトルに戻る)入力時
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            // タイトル画面だけを表示
-            canvas[0].SetActive(true);
-            canvas[1].SetActive(false);
-            canvas[2].SetActive(false);
-            canvas[3].SetActive(false);
-
-            // ゲーム状態フラグを0に
-            gameStateFlag = 0;
+            BackTitle();
         }
 
         // 各対応キー入力時
@@ -174,6 +167,8 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    // 関数-------------------------------------------------------------------------------------
 
     // ゲームスタート(カウントダウン遷移)の関数
     public void GameStart()
@@ -211,22 +206,35 @@ public class GameManager : MonoBehaviour
         gameStateFlag = 3;
     }
 
-    // 難易度を簡単に切り替える関数
+    // 難易度を「簡単」に切り替える関数
     public void SwitchEasy()
     {
         level = 0;
     }
 
-    // 難易度を普通に切り替える関数
+    // 難易度を「普通」に切り替える関数
     public void SwitchNormal()
     {
         level = 1;
     }
 
-    // 難易度を難しいに切り替える関数
+    // 難易度を「難しい」に切り替える関数
     public void SwitchDifficult()
     {
         level = 2;
+    }
+
+    // タイトル画面に遷移する関数
+    public void BackTitle()
+    {
+        // タイトル画面だけを表示
+        canvas[0].SetActive(true);
+        canvas[1].SetActive(false);
+        canvas[2].SetActive(false);
+        canvas[3].SetActive(false);
+
+        // ゲーム状態フラグを0に
+        gameStateFlag = 0;
     }
 
     // ゲームスタート前のカウントダウンの関数
