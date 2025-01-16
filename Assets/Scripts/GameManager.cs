@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using TMPro;
 using unityroom.Api;
 using UnityEngine.Audio;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -75,6 +77,18 @@ public class GameManager : MonoBehaviour
     // SEを流すときに使う
     AudioSource audioSource;
 
+    // eventSystem型の変数を宣言(アルファベットボタン用)
+    [SerializeField] private EventSystem eventSystem;
+
+    // GameObject型の変数を宣言(ボタンオブジェクトを入れる箱)
+    private GameObject button_ob;
+
+    // GameObject型の変数を宣言(テキストオブジェクトを入れる箱)
+    private GameObject NameText_ob;
+
+    // Text型の変数を宣言(テキストコンポーネントを入れる箱)
+    private TMP_Text name_text;
+
     void Start()
     {
         // タイトル画面だけを表示
@@ -135,14 +149,14 @@ public class GameManager : MonoBehaviour
         }
 
         // 各対応キー入力時
-        if (Input.anyKeyDown)
+        if (Input.anyKeyDown && !Input.GetMouseButton(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2))
         {
             string keyStr = Input.inputString;
             char keyChar = keyStr.ToCharArray()[0];
 
-            for (int i = 0; i < weekAlphabet.Length; i++) 
+            for (int i = 0; i < weekAlphabet.Length; i++)
             {
-                if(weekAlphabet[i] == keyChar && week[i] == 0)
+                if (weekAlphabet[i] == keyChar && week[i] == 0)
                 {
                     week[i] = 1;
                     holidayMark[i].SetActive(true);
@@ -154,17 +168,7 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-            if (holidayCount == 7)
-            {
-                // holidayマークを生成する処理
-                GenerateHoliday();
-                // アルファベットを表示
-                GenerateAlphabet();
-                // SEを鳴らす
-                audioSource.PlayOneShot(holidaySE);
-                // スコアを加算
-                score++;
-            }
+            NextWeek();
         }
     }
 
@@ -222,6 +226,51 @@ public class GameManager : MonoBehaviour
     public void SwitchDifficult()
     {
         level = 2;
+    }
+
+    // アルファベットボタンを押したときの関数
+    public void OnAlphabet(Button sender)
+    {
+        // ボタンの子のテキストオブジェクトを名前指定で取得
+        NameText_ob = sender.transform.Find("Text (TMP)").gameObject;
+
+        // テキストオブジェクトのテキストを取得
+        name_text = NameText_ob.GetComponent<TMP_Text>();
+
+        string keyStr = name_text.text.ToString();
+        char keyChar = keyStr.ToCharArray()[0];
+
+        for (int i = 0; i < weekAlphabet.Length; i++)
+        {
+            if (weekAlphabet[i] == keyChar && week[i] == 0)
+            {
+                week[i] = 1;
+                holidayMark[i].SetActive(true);
+                holidayCount++;
+                // SEを鳴らす
+                audioSource.PlayOneShot(correctSE);
+
+                break;
+            }
+        }
+
+        NextWeek();
+    }
+
+    // 一週間そろった時の処理
+    public void NextWeek()
+    {
+        if (holidayCount == 7)
+        {
+            // holidayマークを生成する処理
+            GenerateHoliday();
+            // アルファベットを表示
+            GenerateAlphabet();
+            // SEを鳴らす
+            audioSource.PlayOneShot(holidaySE);
+            // スコアを加算
+            score++;
+        }
     }
 
     // タイトル画面に遷移する関数

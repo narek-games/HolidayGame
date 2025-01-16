@@ -844,7 +844,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 147756915}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 147756914}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &147756915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1234,7 +1246,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 189119975}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 189119974}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &189119975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1627,7 +1651,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 208130376}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 208130375}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &208130376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2254,7 +2290,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 266148171}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 266148170}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &266148171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2375,7 +2423,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 309601089}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 309601088}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &309601089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3849,7 +3909,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 469792139}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 469792138}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &469792139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4379,7 +4451,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 526942127}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 526942126}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &526942127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4715,7 +4799,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 608829767}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 608829766}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &608829767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5192,7 +5288,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 661909043}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 661909042}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &661909043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5895,7 +6003,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 718518242}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 718518241}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &718518242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7091,7 +7211,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1043723309}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1043723308}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1043723309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7469,6 +7601,7 @@ MonoBehaviour:
   holidaySE: {fileID: 0}
   correctSE: {fileID: 0}
   resultSE: {fileID: 0}
+  eventSystem: {fileID: 0}
 --- !u!4 &1088949154
 Transform:
   m_ObjectHideFlags: 0
@@ -7566,7 +7699,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1093232682}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1093232681}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1093232682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8859,7 +9004,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1270790630}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1270790629}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1270790630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9313,7 +9470,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1374827970}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1374827969}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1374827970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9951,7 +10120,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1437359207}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1437359206}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1437359207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10208,7 +10389,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1479233779}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1479233778}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1479233779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10821,7 +11014,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1621362683}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1621362682}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1621362683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11075,7 +11280,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1656978022}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1656978021}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1656978022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11740,7 +11957,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1731309162}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1731309161}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1731309162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11940,7 +12169,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1778735092}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1778735091}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1778735092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12197,7 +12438,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1801907859}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1801907858}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1801907859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12454,7 +12707,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1811849771}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1811849770}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1811849771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12575,7 +12840,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1834282662}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1834282661}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1834282662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12771,7 +13048,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1851294496}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1851294495}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1851294496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13349,7 +13638,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1909268109}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1909268108}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1909268109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14023,7 +14324,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1993232129}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1088949153}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnAlphabet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1993232128}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1993232129
 MonoBehaviour:
   m_ObjectHideFlags: 0
