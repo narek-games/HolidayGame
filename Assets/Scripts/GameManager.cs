@@ -13,6 +13,15 @@ public class GameManager : MonoBehaviour
     // Canvasの表示を管理する配列(0->タイトル、1->ゲーム、2->リザルト、3->カウントダウン)
     public GameObject[] canvas;
 
+    // タイトルの"Holiday"の表示を管理する配列
+    public GameObject[] titleHoliday;
+
+    // タイトルの"Holiday"が入力済みかを文字ごとに判断するためのフラグ配列
+    public int[] titleHolidayFlag = new int[] { 0, 0, 0, 0, 0, 0, 0 };
+
+    // 隠し難易度に遷移するためのカウント(7になったら遷移)
+    public int titleHolidayCount = 0;
+
     // 制限時間のカウント
     //カウントダウン
     public float countdown = 90.0f;
@@ -59,6 +68,9 @@ public class GameManager : MonoBehaviour
     // アルファベット表示用の配列
     public TMP_Text[] alphabetText;
 
+    // 隠し難易度との表示差別化のための配列
+    public GameObject[] AlphabetSetActive;
+
     // ゲーム状態のフラグ
     public int gameStateFlag = 0;
 
@@ -89,6 +101,9 @@ public class GameManager : MonoBehaviour
     // Text型の変数を宣言(テキストコンポーネントを入れる箱)
     private TMP_Text name_text;
 
+    // keyCharを大域変数で宣言(関数化の都合)
+    public char keyChar = ' ';
+
     void Start()
     {
         // タイトル画面だけを表示
@@ -97,6 +112,12 @@ public class GameManager : MonoBehaviour
         canvas[2].SetActive(false);
         canvas[3].SetActive(false);
 
+        // 隠しコマンド表示の"Holiday"を隠す
+        for(int i = 0; i < titleHoliday.Length; i++)
+        {
+            titleHoliday[i].SetActive(false);
+        }
+
         // SEの初期化
         audioSource = GetComponent<AudioSource>();
     }
@@ -104,6 +125,12 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(titleHolidayCount == 7)
+        {
+            level = 3;
+            GameStart();
+        }
+
         if (gameStateFlag == 3)
         {
             // カウントダウン
@@ -152,23 +179,17 @@ public class GameManager : MonoBehaviour
         if (Input.anyKeyDown && !Input.GetMouseButton(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2))
         {
             string keyStr = Input.inputString;
-            char keyChar = keyStr.ToCharArray()[0];
+            keyChar = keyStr.ToCharArray()[0];
 
-            for (int i = 0; i < weekAlphabet.Length; i++)
+            if(level < 3 && gameStateFlag == 1)
             {
-                if (weekAlphabet[i] == keyChar && week[i] == 0)
-                {
-                    week[i] = 1;
-                    holidayMark[i].SetActive(true);
-                    holidayCount++;
-                    // SEを鳴らす
-                    audioSource.PlayOneShot(correctSE);
-
-                    break;
-                }
+                checkInputAlphabet();
             }
 
-            NextWeek();
+            if(gameStateFlag == 0)
+            {
+                checkHiddenHoliday();
+            }
         }
     }
 
@@ -201,10 +222,21 @@ public class GameManager : MonoBehaviour
         // カウントダウンの開始
         StartCountdown();
 
-        // holidayマークを生成する処理
-        GenerateHoliday();
-        // アルファベットを表示
-        GenerateAlphabet();
+        if(level < 3)    // 隠し難易度以外なら
+        {
+            // アルファベットを表示/曲名を非表示
+            AlphabetSetActive[0].SetActive(true);
+            AlphabetSetActive[1].SetActive(false);
+            // holidayマークを生成する処理
+            GenerateHoliday();
+            // アルファベットを表示
+            GenerateAlphabet();
+        }
+        else if(level == 3)   // 隠し難易度なら
+        {
+            AlphabetSetActive[0].SetActive(false);
+            AlphabetSetActive[1].SetActive(true);
+        }
 
         // ゲーム状態のフラグを3(カウントダウン)に
         gameStateFlag = 3;
@@ -231,15 +263,81 @@ public class GameManager : MonoBehaviour
     // アルファベットボタンを押したときの関数
     public void OnAlphabet(Button sender)
     {
-        // ボタンの子のテキストオブジェクトを名前指定で取得
-        NameText_ob = sender.transform.Find("Text (TMP)").gameObject;
+        if(gameStateFlag == 1)
+        {
+            // ボタンの子のテキストオブジェクトを名前指定で取得
+            NameText_ob = sender.transform.Find("Text (TMP)").gameObject;
 
-        // テキストオブジェクトのテキストを取得
-        name_text = NameText_ob.GetComponent<TMP_Text>();
+            // テキストオブジェクトのテキストを取得
+            name_text = NameText_ob.GetComponent<TMP_Text>();
 
-        string keyStr = name_text.text.ToString();
-        char keyChar = keyStr.ToCharArray()[0];
+            string keyStr = name_text.text.ToString();
+            keyChar = keyStr.ToCharArray()[0];
 
+            if(level < 3)
+            {
+                checkInputAlphabet();
+            }
+        }
+
+        if(gameStateFlag == 0)
+        {
+            // ボタンの子のテキストオブジェクトを名前指定で取得
+            NameText_ob = sender.transform.Find("Text (TMP)").gameObject;
+
+            // テキストオブジェクトのテキストを取得
+            name_text = NameText_ob.GetComponent<TMP_Text>();
+
+            string keyStr = name_text.text.ToString();
+            char keyChar = keyStr.ToCharArray()[0];
+
+            checkHiddenHoliday();
+        }
+    }
+
+    // 隠しコマンド入力判定処理
+    public void checkHiddenHoliday()
+    {
+        if (keyChar == 'h' && titleHolidayFlag[0] == 0)
+        {
+            titleHoliday[0].SetActive(true);
+            titleHolidayCount++;
+        }
+        else if (keyChar == 'o' && titleHolidayFlag[1] == 0)
+        {
+            titleHoliday[1].SetActive(true);
+            titleHolidayCount++;
+        }
+        else if (keyChar == 'l' && titleHolidayFlag[2] == 0)
+        {
+            titleHoliday[2].SetActive(true);
+            titleHolidayCount++;
+        }
+        else if (keyChar == 'i' && titleHolidayFlag[3] == 0)
+        {
+            titleHoliday[3].SetActive(true);
+            titleHolidayCount++;
+        }
+        else if (keyChar == 'd' && titleHolidayFlag[4] == 0)
+        {
+            titleHoliday[4].SetActive(true);
+            titleHolidayCount++;
+        }
+        else if (keyChar == 'a' && titleHolidayFlag[5] == 0)
+        {
+            titleHoliday[5].SetActive(true);
+            titleHolidayCount++;
+        }
+        else if (keyChar == 'y' && titleHolidayFlag[6] == 0)
+        {
+            titleHoliday[6].SetActive(true);
+            titleHolidayCount++;
+        }
+    }
+
+    // 入力したアルファベットの正誤判定処理
+    public void checkInputAlphabet()
+    {
         for (int i = 0; i < weekAlphabet.Length; i++)
         {
             if (weekAlphabet[i] == keyChar && week[i] == 0)
@@ -289,6 +387,21 @@ public class GameManager : MonoBehaviour
     // ゲームスタート前のカウントダウンの関数
     void StartCountdown()
     {
+        // 隠しコマンド表示の"Holiday"を隠す
+        for (int i = 0; i < titleHoliday.Length; i++)
+        {
+            titleHoliday[i].SetActive(false);
+        }
+
+        // titleHolidayFlagの初期化
+        for (int i = 0; i < titleHolidayFlag.Length; i++)
+        {
+            titleHolidayFlag[i] = 0;
+        }
+
+        // titleHolidayCountの初期化
+        titleHolidayCount = 0;
+
         //カウントダウンする
         startCountdown -= Time.deltaTime;
 
