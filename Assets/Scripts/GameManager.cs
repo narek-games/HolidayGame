@@ -7,6 +7,7 @@ using unityroom.Api;
 using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -61,6 +62,27 @@ public class GameManager : MonoBehaviour
 
     // アルファベット配列
     private char[] alphabet = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
+
+    // 曲名アルファベット配列(隠しコマンド用)(現在17曲)
+    private string[] music = new string[] { "suisaisekai", "fortunemovie", "mixshake", "reflectioninthemirror", "holidayholiday", "okaranman", "kawaiinosusume", "genyouyakou", "zanyou", "dearmyfuture", "senpenbanka", "sugarmelt", "sugaonopixel", "specialthanks", "aokuharuka", "tsukuyomikurage", "hanamusubi" };
+
+    // 曲名日本語配列(曲名アルファベット配列と対応付け必須)
+    private string[] musicJapanese = new string[] { "水彩世界", "フォーチュンムービー", "Mix shake!!", "Reflection in the mirror", "Holiday∞Holiday", "謳歌爛漫", "Kawaii no susume", "眩耀夜行", "残陽", "Dear my future", "千変万華", "シュガーメルト", "素顔のピクセル", "Special Thanks", "アオクハルカ", "月夜見海月", "ハナムスビ" };
+
+    // 曲名の何文字目の入力待ちかを判断するための変数
+    private int nextInputNumber = 0;
+
+    // 曲名を1文字ずつ格納するための配列
+    private char[] charWeekMusic;
+
+    // 曲名を代入するための変数
+    public string strWeekMusic;
+
+    // 曲名アルファベット表示用の変数
+    public TMP_Text musicNameText;
+
+    // 曲名日本語表示用の変数
+    public TMP_Text musicJapaneseText;
 
     // 1週間のアルファベットを代入する配列
     public char[] weekAlphabet = new char[7];
@@ -158,6 +180,10 @@ public class GameManager : MonoBehaviour
             {
                 levelText.text = "Difficult";
             }
+            else if (level == 3)
+            {
+                levelText.text = "Holiday";
+            }
 
             //時間を表示する
             timeText.text = countdown.ToString("f1") + "秒";
@@ -181,7 +207,7 @@ public class GameManager : MonoBehaviour
             string keyStr = Input.inputString;
             keyChar = keyStr.ToCharArray()[0];
 
-            if(level < 3 && gameStateFlag == 1)
+            if(gameStateFlag == 1)
             {
                 checkInputAlphabet();
             }
@@ -227,6 +253,7 @@ public class GameManager : MonoBehaviour
             // アルファベットを表示/曲名を非表示
             AlphabetSetActive[0].SetActive(true);
             AlphabetSetActive[1].SetActive(false);
+            AlphabetSetActive[2].SetActive(false);
             // holidayマークを生成する処理
             GenerateHoliday();
             // アルファベットを表示
@@ -236,6 +263,16 @@ public class GameManager : MonoBehaviour
         {
             AlphabetSetActive[0].SetActive(false);
             AlphabetSetActive[1].SetActive(true);
+            AlphabetSetActive[2].SetActive(true);
+            // holidayマークを全て表示
+            for(int i = 0;i < holidayMark.Length; i++)
+            {
+                holidayMark[i].SetActive(true);
+            }
+            // 何文字目を見るかの初期化
+            nextInputNumber = 0;
+            // 曲名を表示
+            GenerateMusic();
         }
 
         // ゲーム状態のフラグを3(カウントダウン)に
@@ -274,10 +311,7 @@ public class GameManager : MonoBehaviour
             string keyStr = name_text.text.ToString();
             keyChar = keyStr.ToCharArray()[0];
 
-            if(level < 3)
-            {
-                checkInputAlphabet();
-            }
+            checkInputAlphabet();
         }
 
         if(gameStateFlag == 0)
@@ -289,7 +323,7 @@ public class GameManager : MonoBehaviour
             name_text = NameText_ob.GetComponent<TMP_Text>();
 
             string keyStr = name_text.text.ToString();
-            char keyChar = keyStr.ToCharArray()[0];
+            keyChar = keyStr.ToCharArray()[0];
 
             checkHiddenHoliday();
         }
@@ -338,37 +372,70 @@ public class GameManager : MonoBehaviour
     // 入力したアルファベットの正誤判定処理
     public void checkInputAlphabet()
     {
-        for (int i = 0; i < weekAlphabet.Length; i++)
+        if(level < 3)
         {
-            if (weekAlphabet[i] == keyChar && week[i] == 0)
+            for (int i = 0; i < weekAlphabet.Length; i++)
             {
-                week[i] = 1;
-                holidayMark[i].SetActive(true);
-                holidayCount++;
+                if (weekAlphabet[i] == keyChar && week[i] == 0)
+                {
+                    week[i] = 1;
+                    holidayMark[i].SetActive(true);
+                    holidayCount++;
+                    // SEを鳴らす
+                    audioSource.PlayOneShot(correctSE);
+
+                    break;
+                }
+            }
+
+            NextWeek();
+        }
+        else if(level == 3)
+        {
+            if (charWeekMusic[nextInputNumber] == keyChar)
+            {
+                nextInputNumber++;
+                // 曲名アルファベットの文字スタイルを更新
+                musicNameText.text = ConvertColor();
                 // SEを鳴らす
                 audioSource.PlayOneShot(correctSE);
 
-                break;
+                NextWeek();
             }
         }
-
-        NextWeek();
     }
 
     // 一週間そろった時の処理
     public void NextWeek()
     {
-        if (holidayCount == 7)
+        if(level < 3)
         {
-            // holidayマークを生成する処理
-            GenerateHoliday();
-            // アルファベットを表示
-            GenerateAlphabet();
-            // SEを鳴らす
-            audioSource.PlayOneShot(holidaySE);
-            // スコアを加算
-            score++;
+            if (holidayCount == 7)
+            {
+                // holidayマークを生成する処理
+                GenerateHoliday();
+                // アルファベットを表示
+                GenerateAlphabet();
+                // SEを鳴らす
+                audioSource.PlayOneShot(holidaySE);
+                // スコアを加算
+                score++;
+            }
         }
+        else if(level == 3)
+        {
+            if (nextInputNumber == charWeekMusic.Length)
+            {
+                // 何文字目を見るかの初期化
+                nextInputNumber = 0;
+                // 曲名を表示
+                GenerateMusic();
+                // SEを鳴らす
+                audioSource.PlayOneShot(holidaySE);
+                // スコアを加算
+                score++;
+            }            
+        } 
     }
 
     // タイトル画面に遷移する関数
@@ -517,7 +584,6 @@ public class GameManager : MonoBehaviour
             startHoliday = Random.Range(0, 3);
         }
 
-
         // holidayマークをつけるループ
         for (int i = 0; i < week.Length; i++)
         {
@@ -542,7 +608,6 @@ public class GameManager : MonoBehaviour
                 }
                 
             }       
-            
         }
     }
 
@@ -570,5 +635,43 @@ public class GameManager : MonoBehaviour
 
             alphabetText[i].text = weekAlphabet[i].ToString();
         }
+    }
+
+    // ランダムに曲名を生成
+    void GenerateMusic()
+    {
+        // 曲名配列からランダムに取得
+        int musicNumber = Random.Range(0, music.Length);
+        // 曲名を選択
+        strWeekMusic = music[musicNumber];
+        
+        // 曲名日本語を表示
+        musicJapaneseText.text = musicJapanese[musicNumber];
+        // 曲名を1文字ずつchar配列に格納
+        charWeekMusic = strWeekMusic.ToCharArray();
+
+        // 曲名アルファベットの文字スタイルを適用して表示
+        musicNameText.text = ConvertColor();
+    }
+
+    // タイプ判別用の文字の色を変更する関数
+    string ConvertColor()
+    {
+        string text = "";
+        for (int i = 0; i < nextInputNumber; i++)
+        {
+            text += "<style=typed>";
+            text += charWeekMusic[i].ToString();
+            text += "</style>";
+        }
+
+        for (int i = nextInputNumber; i < charWeekMusic.Length; i++)
+        {
+            text += "<style=untyped>";
+            text += charWeekMusic[i].ToString();
+            text += "</style>";
+        }
+
+        return text;
     }
 }
