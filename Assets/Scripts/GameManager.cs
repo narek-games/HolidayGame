@@ -6,7 +6,6 @@ using TMPro;
 using unityroom.Api;
 using UnityEngine.Audio;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using System.Linq;
 
 public class GameManager : MonoBehaviour
@@ -76,7 +75,7 @@ public class GameManager : MonoBehaviour
     private char[] charWeekMusic;
 
     // 曲名を代入するための変数
-    public string strWeekMusic;
+    private string strWeekMusic;
 
     // 曲名アルファベット表示用の変数
     public TMP_Text musicNameText;
@@ -110,9 +109,6 @@ public class GameManager : MonoBehaviour
 
     // SEを流すときに使う
     AudioSource audioSource;
-
-    // eventSystem型の変数を宣言(アルファベットボタン用)
-    [SerializeField] private EventSystem eventSystem;
 
     // GameObject型の変数を宣言(ボタンオブジェクトを入れる箱)
     private GameObject button_ob;
@@ -170,15 +166,15 @@ public class GameManager : MonoBehaviour
             // 現在の難易度を表示
             if (level == 0)
             {
-                levelText.text = "Easy";
+                levelText.text = "Easy(ボーナス×"+ (level + 1) +")";
             }
             else if (level == 1)
             {
-                levelText.text = "Normal";
+                levelText.text = "Normal(ボーナス×"+ (level + 1) +")";
             }
             else if (level == 2)
             {
-                levelText.text = "Difficult";
+                levelText.text = "Difficult(ボーナス×"+ (level + 1) +")";
             }
             else if (level == 3)
             {
@@ -419,7 +415,7 @@ public class GameManager : MonoBehaviour
                 // SEを鳴らす
                 audioSource.PlayOneShot(holidaySE);
                 // スコアを加算
-                score++;
+                score = score + (level + 1);
             }
         }
         else if(level == 3)
@@ -507,8 +503,17 @@ public class GameManager : MonoBehaviour
             // 結果スコアを表示
             resultScoreText.text = score.ToString() + "週間";
 
-            // ボードNo1にスコア123.45fを送信する。
-            UnityroomApiClient.Instance.SendScore(1, score, ScoreboardWriteMode.HighScoreDesc);
+            if(level < 3)
+            {
+                // ボードNo1にスコアを送信する(通常難易度)
+                UnityroomApiClient.Instance.SendScore(1, score, ScoreboardWriteMode.HighScoreDesc);
+            }
+            else if(level == 3)
+            {
+                // ボードNo2にスコアを送信する(隠し難易度)
+                UnityroomApiClient.Instance.SendScore(2, score, ScoreboardWriteMode.HighScoreDesc);
+            }
+            
 
             // メッセージ判定
             if (score < 10)
@@ -544,7 +549,7 @@ public class GameManager : MonoBehaviour
                 resultMessage.text = "あたし、センパイと残陽したんだっ！";
             }
 
-            // ゲームスタートフラグを2(リザルト)に
+            // ゲーム状態フラグを2(リザルト)に
             gameStateFlag = 2;
         }
     }
